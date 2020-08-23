@@ -1,0 +1,59 @@
+{
+    "vault": {
+        "auth": {
+            "token": {
+                "url": "http://localhost:8200",
+                "auth": {
+                    "type": "token",
+                    "payload": "s.ZVTPwyWiY6GwLs4CUISi52Yb"
+                }
+            },
+            "userpass": {
+                "url": "http://localhost:8200",
+                "auth": {
+                    "type": "userpass",
+                    "path": "user1",
+                    "payload": {
+                        "password": "password1"
+                    }
+                }
+            }
+        },
+        "test-cases": {
+            "delete": {
+                "mountPoint": "some-very",
+                "path": "confidential/secret"
+            },
+            "write": {
+                "mountPoint": "some-very",
+                "path": "confidential/secret",
+                "data": {
+                    "lorem-ipsum": "2"
+                }
+            },
+            "list": {
+                "mountPoint": "some-very",
+                "fullPath": "confidential/secret",
+                "path": "confidential",
+                "data": {
+                    "lorem-ipsum": "2"
+                }
+            },
+            "patch": {
+                "mountPoint": "some-very",
+                "path": "confidential/secret",
+                "data": {
+                    "super-secret": 1
+                }
+            },
+            "read": {
+                "mountPoint": "some-very",
+                "path": "confidential/secret",
+                "data": {
+                    "lorem-ipsum": "2",
+                    "super-secret": 1
+                }
+            }
+        }
+    }
+}

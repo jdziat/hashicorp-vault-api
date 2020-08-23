@@ -1,0 +1,43 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    expose:
+      - 5432
+    volumes:
+      - $PWD/config/psql:/docker-entrypoint-initdb.d
+      - $PWD/temp:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: md5
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: vault
+  vault:
+    image: vault
+    command: server -config /tmp/config/config.hcl
+    restart: always
+    environment:
+      VAULT_API_ADDR: http://localhost:8200
+    volumes:
+      - $PWD/config/vault:/tmp/config
+      - $PWD/logs/:/tmp/logs
+    cap_add: 
+      - IPC_LOCK
+    ports:
+      - "8200:8200"
+    depends_on:
+      - postgres
+  #### 
+  ## Uncomment the below section to build and run tests against the vault.
+  ####
+  
+  # testing:
+  #   build: .
+  #   command: [ "./wait-for-it.sh","vault:8200","--","npm","run","test"]
+  #   environment:
+  #     VAULT_ADDR: http://vault:8200
+  #     # These are examples replace with the relevant information for your environment
+  #     VAULT_TOKEN: s.ZVTPwyWiY6GwLs4CUISi52Yb
+  #     VAULT_SEAL: 648e6fe54d839b2fa39e04545bcd2b63625ac5759767539a47675f5cd269de03
+  #   depends_on:
+  #     - vault

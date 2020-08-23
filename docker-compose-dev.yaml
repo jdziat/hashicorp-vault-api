@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  vault:
+    image: vault
+    command: server -dev
+    restart: always
+    volumes:
+      - $PWD/config/vault:/tmp/config
+      - $PWD/logs/:/tmp/logs
+    cap_add: 
+      - IPC_LOCK
+    expose:
+      - 8200
+    ports:
+      - target: 8200
+        published: 8200
+        protocol: tcp
+        mode: host

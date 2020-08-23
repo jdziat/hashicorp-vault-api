@@ -1,0 +1,22 @@
+{
+  "name": "hashicorp-vault-api",
+  "version": "1.0.0",
+  "description": "REST API wrapper for hashicorp vault",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node lib/example.js",
+    "test": "mocha --timeout 60000 ./test/**.test.js"
+  },
+  "author": "Jordan Dziat <jdziat@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "debug": "^4.1.1",
+    "got": "^11.5.2",
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.1.1",
+    "standard": "^14.3.4"
+  }
+}

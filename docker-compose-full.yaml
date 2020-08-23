@@ -1,0 +1,30 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres
+    expose:
+      - 5432
+    volumes:
+      - $PWD/config/psql:/docker-entrypoint-initdb.d
+      - $PWD/temp:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: md5
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: test
+      POSTGRES_DB: vault
+  vault:
+    image: vault
+    command: server -config /tmp/config/config.hcl
+    restart: always
+    volumes:
+      - $PWD/config/vault:/tmp/config
+      - $PWD/logs/:/tmp/logs
+    cap_add: 
+      - IPC_LOCK
+    ports:
+      - target: 8200
+        published: 8200
+        protocol: tcp
+        mode: host
+    depends_on:
+      - postgres
